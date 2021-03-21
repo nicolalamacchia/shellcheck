@@ -629,7 +629,7 @@ prop_checkForInQuoted9 = verifyNot checkForInQuoted "for f in 'ls,' 'grep,' 'mv'
 checkForInQuoted _ (T_ForIn _ f [T_NormalWord _ [word@(T_DoubleQuoted id list)]] _)
     | any (\x -> willSplit x && not (mayBecomeMultipleArgs x)) list
             || maybe False wouldHaveBeenGlob (getLiteralString word) =
-        err id 2066 "Since you double quoted this, it will not word split, and the loop will only run once."
+        warn id 2066 "Since you double quoted this, it will not word split, and the loop will only run once."
 checkForInQuoted _ (T_ForIn _ f [T_NormalWord _ [T_SingleQuoted id _]] _) =
     warn id 2041 "This is a literal string. To run as a command, use $(..) instead of '..' . "
 checkForInQuoted _ (T_ForIn _ _ [single] _)
